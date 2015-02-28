@@ -5,13 +5,15 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
+var util = require('./util');
+
 
 function CreateEvent(req, res){
     console.log('CreateEvent called');
     var params = req.params.all();
 
     var new_event = {
-        name: params.username,
+        name: params.name,
         password_hash: util.hash_password(params.password),
         channels: [],
     };
@@ -24,7 +26,7 @@ function CreateEvent(req, res){
                     status: 'Error',
                 });
             } else {
-                Event.create(new_user)
+                Event.create(new_event)
                     .exec(function (err, created){
                         if (err){
                             res.json({

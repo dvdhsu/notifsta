@@ -38,7 +38,7 @@ function Login(req, res){
 }
 
 function Logout(req, res){
-    res.cookie('user-id', null);
+    res.clearCookie('user-id');
     res.send('Success!');
 }
 
