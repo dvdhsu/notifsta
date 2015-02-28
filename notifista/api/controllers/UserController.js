@@ -26,7 +26,7 @@ function Login(req, res){
                     res.send('SUccess!');
                 } else {
                     // invalid password
-                    if (req.session.user) req.session.user = null;
+                    if (req.session.user) res.cookie = ('user-id', null);
                     res.json({ error: 'Invalid password' }, 400);
                     //res.send(req.session);
                 }
@@ -35,6 +35,11 @@ function Login(req, res){
             res.json({ error: 'User not found' }, 404);
         }
     });
+}
+
+function Logout(req, res){
+    res.cookie('user-id', null);
+    res.send('Success!');
 }
 
 function CreateUser(req, res){
@@ -129,7 +134,8 @@ module.exports = {
     //  }
     CreateUser: CreateUser,
 
-    Login: Login
+    Login: Login,
+    Logout: Logout
 
 
 

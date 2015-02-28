@@ -33,7 +33,11 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': {
-    view: 'homepage'
+    view: 'index'
+  },
+
+  '/:unknownRoute': {
+    view: 'home/index'
   },
   /***************************************************************************
   *                                                                          *
@@ -45,10 +49,12 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'POST /user': 'UserController.CreateUser',
-  'GET /user' : 'UserController.GetUser',
-  'POST /auth' : 'UserController.Login',
+  'POST /api/user': 'UserController.CreateUser',
+  'GET /api/user' : 'UserController.GetUser',
 
-  'POST /event': 'EventController.CreateEvent',
-  'GET /event' : 'EventController.GetEvent'
+  'POST /api/auth' : 'UserController.Login',
+  'GET /api/auth/logout' : 'UserController.Logout',
+
+  'POST /api/event': 'EventController.CreateEvent',
+  'GET /api/event' : 'EventController.GetEvent'
 };
