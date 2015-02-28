@@ -13,7 +13,6 @@ module.exports = {
         },
         channels : {
             type: 'array',
-            required: true
         },
         password_hash : {
             type: 'string',
