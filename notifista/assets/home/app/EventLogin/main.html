@@ -1,0 +1,17 @@
+<div style="height: 600px; overflow-y: scroll" scroll-glue>
+    <div>
+      OUR USER ID: {{ user_id() }}
+    </div>
+
+    <input type="text"
+           ng-model="input.email"
+           autofocus />
+    <input type="text"
+           ng-model="input.password"
+           autofocus />
+           <button ng-click="loginUser()">LOGIN</button>
+    <button ng-click="logoutUser()">LOGOUT</button>
+    <button ng-click="loginEvent()">LOGIN</button>
+    <button ng-click="logoutEvent()">LOGOUT</button>
+</div>
+

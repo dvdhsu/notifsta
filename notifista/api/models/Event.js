@@ -18,7 +18,6 @@ module.exports = {
         },
         channels: {
             type: 'array',
-            required: true
         }
     }
 };

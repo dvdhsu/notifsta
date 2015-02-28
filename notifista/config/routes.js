@@ -56,8 +56,11 @@ module.exports.routes = {
   'POST /api/user': 'UserController.CreateUser',
   'GET /api/user' : 'UserController.GetUser',
 
-  'POST /api/auth' : 'UserController.Login',
-  'GET /api/auth/logout' : 'UserController.Logout',
+  'POST /api/auth/user' : 'UserController.Login',
+  'GET /api/auth/user/logout' : 'UserController.Logout',
+
+  'POST /api/auth/event' : 'EventController.Login',
+  'GET /api/auth/event/logout' : 'EventController.Logout',
 
   'POST /api/event': 'EventController.CreateEvent',
   'GET /api/event' : 'EventController.GetEvent'
