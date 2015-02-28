@@ -1,10 +1,5 @@
 /** Anthony Guo (anthony.guo@some.ox.ac.uk)
  *
- * A shell to interact with the bughouse internet chess server.
- *
- * The shell is only turned on if the "dev=true" flag is in
- * the URL.
- *
  */
 (function(){
     angular.module('notifista.controllers').controller('Test',
@@ -45,8 +40,9 @@
         $scope.login = function(){
             var p = NotifistaHttp.LoginEvent( $scope.input.name, $scope.input.password);
             console.log(p);
-            p.success(function(e){
-                console.log(e);
+            p.success(function(user){
+                console.log(user);
+                StateService.User = user;
             })
             p.error(function(e){
                 console.log(e);

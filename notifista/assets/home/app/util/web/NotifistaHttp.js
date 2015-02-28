@@ -3,7 +3,6 @@
 
     function service($http){
         function LoginUser(email, password){
-            console.log('OK')
             return $http.post('/api/auth/user', {
                     email: email,
                     password: password
@@ -14,10 +13,9 @@
             return $http.get('api/auth/user/logout');
         }
 
-        function LoginEvent(eventName, password){
-            console.log('OK')
+        function LoginEvent(name, password){
             return $http.post('/api/auth/event', {
-                    eventName: eventName,
+                    name: name,
                     password: password
                 });
         }
@@ -49,12 +47,31 @@
             return $http.get('api/auth/event/logout');
         }
 
+        function CreateEvent(name, password){
+            return $http.post('api/event/', {
+                name : name,
+                password: password
+            });
+        }
+
+        function CreateChannel(name){
+            return $http.post('api/event/channel', {
+                name : name
+            });
+        }
+
+        function CreateNotification(event_name, channel_name, message){
+            return $http.post('api/event/channel/notif')
+        }
+
         return {
             LoginUser: LoginUser,
             LogoutUser: LogoutUser,
             LoginEvent: LoginEvent,
             LogoutEvent: LogoutEvent,
             GetParseData: GetParseData
+            CreateEvent: CreateEvent,
+            CreateChannel: CreateChannel
         }
     }
 

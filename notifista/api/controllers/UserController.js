@@ -22,8 +22,8 @@ function Login(req, res){
                 if (match) {
                     // password match
                     res.cookie('user-id', user.id.toString());
-                    res.cookie('rememberme', '1', { expires: new Date(Date.now() + 900000), httpOnly: true });
-                    res.send('SUccess!');
+                    delete(user.password_hash); //Do not send hash of password
+                    res.json(user);
                 } else {
                     // invalid password
                     if (req.session.user) res.cookie = ('user-id', null);

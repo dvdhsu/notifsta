@@ -7,8 +7,9 @@
  *
  */
 (function(){
-    angular.module('notifista.controllers').controller('Test',
-    ['$scope', 'NotifistaHttp', 'State', '$cookies',function($scope, NotifistaHttp, StateService, $cookies) {
+    angular.module('notifista.controllers').controller('EventLogin',
+        ['$scope', 'NotifistaHttp', 'StateService', '$cookies',function($scope, NotifistaHttp, StateService, $cookies) {
+            console.log("HWFEWF")
 
         $scope.screen = '';
 
@@ -17,7 +18,7 @@
         // documented here:
         // http://stackoverflow.com/questions/12618342/ng-model-does-not-update-controller-value
         $scope.input = {
-            eventname: 'Gr8Event',
+            eventname: 'event',
             password: 'asdfasdf'
         };
 
@@ -31,17 +32,18 @@
         }
 
         $scope.login = function(){
-            var p = NotifistaHttp.Login( $scope.input.email, $scope.input.password);
+            var p = NotifistaHttp.LoginEvent($scope.input.eventname, $scope.input.password);
             console.log(p);
-            p.success(function(e){
-                console.log(e);
+            p.success(function(event){
+                console.log(event);
+                StateService.Event = event;
             })
             p.error(function(e){
                 console.log(e);
             })
         }
         $scope.logout = function(){
-            var p =NotifistaHttp.Logout();
+            var p =NotifistaHttp.LogoutEvent();
             p.success(function(e){
                 console.log(e);
             })
@@ -50,11 +52,5 @@
             })
 
         }
-
-
-        function MsgArrived(response) {
-            $scope.screen += response.data;
-        }
-
     }]);
 })();
