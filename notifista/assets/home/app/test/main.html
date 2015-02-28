@@ -1,4 +1,128 @@
-<div style="height: 600px; overflow-y: scroll" scroll-glue>
+<script type="text/javascript">
+
+      var ctx = $("#myChart").get(0).getContext("2d");
+
+      var data = {
+          labels: ["January", "February", "March", "April", "May", "June", "July"],
+          datasets: [
+              {
+                  label: "My First dataset",
+                  fillColor: "rgba(220,220,220,0.2)",
+                  strokeColor: "rgba(220,220,220,1)",
+                  pointColor: "rgba(220,220,220,1)",
+                  pointStrokeColor: "#fff",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(220,220,220,1)",
+                  data: [65, 59, 80, 81, 56, 55, 40]
+              },
+              {
+                  label: "My Second dataset",
+                  fillColor: "rgba(151,187,205,0.2)",
+                  strokeColor: "rgba(151,187,205,1)",
+                  pointColor: "rgba(151,187,205,1)",
+                  pointStrokeColor: "#fff",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(151,187,205,1)",
+                  data: [28, 48, 40, 19, 86, 27, 90]
+              }
+          ]
+      };
+
+      var myLineChart = new Chart(ctx).Line(data, options);
+
+</script>
+
+<div class="row content">
+
+  <div class="col-md-2">
+
+  </div>
+
+  <div class="col-md-9">
+
+    <div class="row newnotice">
+
+      <input class="newnoticeinput" type="text" placeholder="Write a new notice...">
+
+    </div>
+
+    <div class="row stats">
+
+      <div class="col-md-4 stat stat-left">
+
+        <div class="actual-stat">
+
+          <div class="stat-icon blue">
+
+            <img src="../../../images/users-icon.png" class="icon">
+
+          </div>
+
+          <div class="stat-text">
+
+              <span class="stat-number">187</span>
+              <span class="stat-unit">app users</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-4 stat stat-middle">
+
+        <div class="actual-stat">
+
+          <div class="stat-icon orange">
+
+            <img src="../../../images/broadcasts-icon.png" class="icon">
+
+          </div>
+
+          <div class="stat-text">
+
+            <span class="stat-number">16</span>
+            <span class="stat-unit">&nbspbroadcasts</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-4 stat stat-right">
+
+        <div class="actual-stat">
+
+          <div class="stat-icon green">
+
+            <img src="../../../images/users-icon.png" class="icon">
+
+          </div>
+
+          <div class="stat-text">
+
+            <span class="stat-number">55</span>
+            <span class="stat-unit">somethings</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="row graph">
+
+      <canvas id="myChart" width="400" height="400"></canvas>
+
+    </div>
+
+  </div>
+
+</div>
+<!--<div>
     <div>
       OUR USER ID: {{ user_id() }}
     </div>
@@ -11,5 +135,6 @@
            autofocus />
     <button ng-click="login()">LOGIN</button>
     <button ng-click="logout()">LOGOUT</button>
-</div>
 
+
+</div>-->

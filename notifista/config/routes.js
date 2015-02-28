@@ -39,6 +39,10 @@ module.exports.routes = {
   '/:unknownRoute': {
     view: 'home/index'
   },
+
+  '/login': {
+    view: 'login'
+  },
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
