@@ -1,22 +1,36 @@
 (function(){
-    angular.module('notifista.services').service('NotifistaHttp',['$http', service]);
+    angular.module('notifista.services').service('NotifistaHttp', ['$http', service]);
 
     function service($http){
-        function Login(email, password){
+        function LoginUser(email, password){
             console.log('OK')
-            return $http.post('/api/auth', {
+            return $http.post('/api/auth/user', {
                     email: email,
                     password: password
                 });
         }
 
-        function Logout(){
-            return $http.get('api/auth/logout');
+        function LogoutUser(){
+            return $http.get('api/auth/user/logout');
+        }
+
+        function LoginEvent(eventName, password){
+            console.log('OK')
+            return $http.post('/api/auth/event', {
+                    eventName: eventName,
+                    password: password
+                });
+        }
+
+        function LogoutEvent(){
+            return $http.get('api/auth/event/logout');
         }
 
         return {
-            Login: Login,
-            Logout: Logout
+            LoginUser: LoginUser,
+            LogoutUser: LogoutUser,
+            LoginEvent: LoginEvent,
+            LogoutEvent: LogoutEvent
         }
     }
 
