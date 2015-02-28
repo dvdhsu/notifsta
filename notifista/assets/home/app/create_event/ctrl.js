@@ -1,43 +1,38 @@
 /** Anthony Guo (anthony.guo@some.ox.ac.uk)
+ * THIS IS JUST COPYPASTED DO NOT USE
  *
  */
 (function(){
-    angular.module('notifista.controllers').controller('Test',
-    ['$scope', 'NotifistaHttp', 'StateService', '$cookies', function($scope, NotifistaHttp, StateService, $cookies) {
+    angular.module('notifista.controllers').controller('CreateEvent',
+        ['$scope', 'NotifistaHttp', 'StateService', '$cookies',function($scope, NotifistaHttp, StateService, $cookies) {
+            console.log("HWFEWF")
 
         $scope.screen = '';
-        $scope.logged_in = StateService.GetUserLoggedIn;
-
         // Need to make 'cmd' a child element of input. The issue is
         // documented here:
         // http://stackoverflow.com/questions/12618342/ng-model-does-not-update-controller-value
         $scope.input = {
-            email: 'anthony_guo@live.com',
+            eventname: 'event',
             password: 'asdfasdf'
         };
-
-        $scope.user_id = function(){
-            return $cookies['user-id'];
-        }
-        console.log($cookies);
 
         $scope.submit = function(cmd){
             $scope.input.cmd = '';
         }
 
         $scope.login = function(){
-            var p = NotifistaHttp.LoginUser( $scope.input.email, $scope.input.password);
+            var p = NotifistaHttp.LoginEvent($scope.input.eventname, $scope.input.password);
             console.log(p);
-            p.success(function(user){
-                console.log(user);
-                StateService.User = user;
+            p.success(function(event){
+                console.log(event);
+                StateService.Event = event;
             })
             p.error(function(e){
                 console.log(e);
             })
         }
         $scope.logout = function(){
-            var p =NotifistaHttp.LogoutUser();
+            var p =NotifistaHttp.LogoutEvent();
             p.success(function(e){
                 console.log(e);
             })
@@ -46,11 +41,5 @@
             })
 
         }
-
-
-        function MsgArrived(response) {
-            $scope.screen += response.data;
-        }
-
     }]);
 })();

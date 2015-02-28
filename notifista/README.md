@@ -54,6 +54,40 @@ Logout User
 GET /api/auth/user/logout
 ```
 
+Get Event
+```
+GET /api/Event
+
+Url Params:
+    name :  string
+
+Returns
+{
+    status: "Error|Success",
+    data : {
+        name: email,
+        channels: [
+            { 
+                name: string 
+                //possibly more information here
+            }
+       ]
+    }
+}
+
+```
+
+Create Event
+```
+POST /api/Event
+
+Form data:
+    name : string
+    password : string
+
+Returns: 
+    { status: 'Error|Success' }
+```
 Authenticate Event
 ```
 POST /api/auth/event

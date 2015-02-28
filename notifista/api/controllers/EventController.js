@@ -8,15 +8,60 @@
 var util = require('./util');
 
 function CreateChannel(req, res){
-    var event_id = 23;
+    console.log(req.session);
+    console.log(req.cookies);
+    var event_id = req.cookies['event-id'];
+    var params = req.params.all();
+    if (!event_id){
+        res.json({error: 'Not logged into event!'});
+        return;
+    }
+    function HandleFindEvent(err, event){
+        console.log('FOUND EVENT');
+        console.log(event);
+        if (err) res.json({ error: 'DB error' }, 500);
+        if (event) {
+            if (!event.channels){
+                event.channels = [];
+            }
+            for(var i = 0; i != event.channels.length; ++i){
+                console.log('sdf');
+                console.log(event.channels[i]);
+                if (event.channels[i].name == params.name){
+                    res.json({error: 'Channel with that name already exists!'});
+                    return;
+                }
+            }
+            console.log('sdf');
+            event.channels.push({
+                name: params.name,
+                //OTHER STUFF FOR PARSE
+            });
+                console.log('sdf');
+            event.save(function(error){
+                if (error){
+                    res.json({status: 'Error occurred when trying to save the event'});
+                } else {
+                    res.json({status: 'Success'});
+                }
+            });
+        } else {
+            res.json({ error: 'Event not found' }, 404);
+        }
+
+    }
+    var promise = Event.findOne({id: event_id});
+    promise.exec(HandleFindEvent);
+
 }
 
 function Login(req, res){
     var bcrypt = require('bcrypt');
     var params = req.params.all();
     console.log(req.session);
+    console.log(params);
 
-    User.findOne({name: params.name}).exec(function (err, event) {
+    Event.findOne({name: params.name}).exec(function (err, event) {
         if (err) res.json({ error: 'DB error' }, 500);
 
         if (event) {
@@ -26,16 +71,16 @@ function Login(req, res){
                 if (match) {
                     // password match
                     res.cookie('event-id', event.id.toString());
-                    res.send('Success!');
+                    delete(event.password_hash); //Do not send hash of password
+                    res.json(event);
                 } else {
                     // invalid password
                     if (req.session.event) res.clearCookie('event-id');
                     res.json({ error: 'Invalid password' }, 400);
-                    //res.send(req.session);
                 }
             });
         } else {
-            res.json({ error: 'User not found' }, 404);
+            res.json({ error: 'Event not found' }, 404);
         }
     });
 }
@@ -117,5 +162,8 @@ function GetEvent(req, res){
 module.exports = {
     CreateEvent: CreateEvent,
     GetEvent: GetEvent,
+    CreateChannel: CreateChannel,
+    Login: Login,
+    Logout: Logout
 };
 
