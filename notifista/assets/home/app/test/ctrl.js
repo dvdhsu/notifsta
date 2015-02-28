@@ -17,7 +17,7 @@
         // documented here:
         // http://stackoverflow.com/questions/12618342/ng-model-does-not-update-controller-value
         $scope.input = {
-            email: 'anthony_guo@live.com',
+            name: 'anthony_guo@live.com',
             password: 'asdfasdf'
         };
 
@@ -30,8 +30,20 @@
             $scope.input.cmd = '';
         }
 
+        var promise = NotifistaHttp.GetParseData();
+        promise.success(function(data){
+            
+            console.log(data);
+
+        });
+        promise.error(function(err){
+            //error is in err
+            console.log('ERROR');
+            console.log(err);
+        })
+
         $scope.login = function(){
-            var p = NotifistaHttp.LoginUser( $scope.input.email, $scope.input.password);
+            var p = NotifistaHttp.LoginEvent( $scope.input.name, $scope.input.password);
             console.log(p);
             p.success(function(e){
                 console.log(e);
@@ -41,7 +53,7 @@
             })
         }
         $scope.logout = function(){
-            var p =NotifistaHttp.LogoutUser();
+            var p =NotifistaHttp.LogoutEvent();
             p.success(function(e){
                 console.log(e);
             })
