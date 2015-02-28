@@ -10,6 +10,22 @@ GET /api/user
 Url Params:
     email :  string
 
+Returns
+{
+    status: "Error|Success",
+    data : {
+        email: email,
+        events: [
+            { 
+                name: string
+                channels: [
+                    channel: string
+                ]
+            }
+       ]
+    }
+}
+
 ```
 
 Create User
@@ -19,6 +35,8 @@ POST /api/user
 Form data:
     email : string
     password : string
+
+Returns: success i think
 ```
 
 Authenticate User
