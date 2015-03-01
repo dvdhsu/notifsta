@@ -7,6 +7,28 @@
 
 var util = require('./util');
 
+function GetNumberOfSubscribers(req, res){
+    console.log(req.session);
+    console.log(req.cookies);
+    var event_name = req.cookies['event-name'];
+    var params = req.params.all();
+
+    var query = {
+        where : {
+            event_name: event_name,
+        }
+    }
+    if (last_time){
+        query.where.createdAt = { '>' : new Date(last_time) }
+    }
+    console.log(query);
+    User.find(query).exec(function(err, data){
+        console.log(err);
+        console.log(data);
+        res.json(data);
+    })
+}
+
 function GetInviteLink(req, res){
     console.log(req.session);
     console.log(req.cookies);
