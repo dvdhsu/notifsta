@@ -50,7 +50,7 @@ function GetInviteLink(req, res){
                     res.json({
                         status: 'Success',
                         data: {
-                            url: GLOBAL.DOMAIN_NAME + '/invite/?event-name=' + event_name + '&channel_name=' + params.name + '&email=' + params.email
+                            url: 'http://notifsta.com/invite/?event-name=' + event_name + '&channel_name=' + params.name + '&email=' + params.email
                         }
                     })
                     return;
