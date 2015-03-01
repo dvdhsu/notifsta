@@ -10,7 +10,7 @@ var util = require('./util.js')
 function AddEventChannel(req, res){
     console.log(req.session);
     console.log(req.cookies);
-    var user_id = req.truecookies['user-id'];
+    var user_id = req.cookies['user-id'];
     var params = req.params.all();
     if (!user_id){
         res.json({error: 'Not logged in as a user!'});
@@ -92,7 +92,7 @@ function Login(req, res) {
 
                 if (match) {
                     // password match
-                    res.cookie('user-id', user.id.toString(),{httpOnly: false, expires: new Date(Date.now() + 10*60*1000)}); //login!
+                    res.cookie('user-id', user.id.toString(),{httpOnly: false, expires: new Date(Date.now() + 100*60*1000)}); //login!
                     delete(user.password_hash); //Do not send hash of password
                     res.json({
                         status: 'Success',
@@ -136,7 +136,7 @@ function CreateUser(req, res){
                         data: err
                     });
                 } else {
-                    res.cookie('user-id', created.id.toString(),{httpOnly: false, expires: new Date(Date.now() + 10*60*1000)}); //login!
+                    res.cookie('user-id', created.id.toString(),{httpOnly: false, expires: new Date(Date.now() + 100*60*1000)}); //login!
                     delete(created.password_hash); //Do not send hash of password
                     res.json({
                         status: 'Success',
