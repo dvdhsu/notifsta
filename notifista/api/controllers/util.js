@@ -11,23 +11,20 @@ module.exports = {
         var salt = bcrypt.genSaltSync(10);
         return bcrypt.hashSync(password, salt);
     },
-    PushNotification: function(event_name, channel_names, message){
-        console.log(channel_names);
-        channel_names.map(function(channel_name){
-            var notification = {
-                channels: [channel_name],
-                data: {
-                    alert: message,
-                    event: event_name,
-                    channel: channel_name
-                }
-            };
-            var app = new Parse(APP_ID, MASTER_KEY);
+    PushNotification: function(obj){
+        var notification = {
+            channels: [obj.channel_name],
+            data: {
+                alert: obj.message,
+                event: obj.event_name,
+                channel: obj.channel_name
+            }
+        };
+        var app = new Parse(APP_ID, MASTER_KEY);
 
-            app.sendPush(notification, function(err, resp){
-                console.log(err);
-                console.log(resp);
-            });
-        })
+        app.sendPush(notification, function(err, resp){
+            console.log(err);
+            console.log(resp);
+        });
     }
 }
