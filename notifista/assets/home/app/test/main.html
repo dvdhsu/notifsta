@@ -1,6 +1,7 @@
-<div ng-hide="logged_in()">
+<div ng-show="!logged_in()">
     <div>
       OUR USER ID: {{ user_id() }}
+      {{ logged_in ()}}
       <br/>
       LOGGED IN? {{ logged_in() }}
     </div>

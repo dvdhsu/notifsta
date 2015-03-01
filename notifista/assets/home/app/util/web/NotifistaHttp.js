@@ -69,7 +69,7 @@
             LogoutUser: LogoutUser,
             LoginEvent: LoginEvent,
             LogoutEvent: LogoutEvent,
-            GetParseData: GetParseData
+            GetParseData: GetParseData,
             CreateEvent: CreateEvent,
             CreateChannel: CreateChannel
         }
