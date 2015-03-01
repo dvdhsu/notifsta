@@ -7,18 +7,57 @@
 
 var util = require('./util');
 
-function CreateChannel(req, res){
+function GetInviteLink(req, res){
     console.log(req.session);
     console.log(req.cookies);
     var event_id = req.cookies['event-id'];
     var params = req.params.all();
+
     if (!event_id){
         res.json({error: 'Not logged into event!'});
         return;
     }
     function HandleFindEvent(err, event){
+        if (err) res.json({ error: 'DB error' }, 500);
+        if (event) {
+            if (!event.channels){
+                event.channels = [];
+            }
+            for(var i = 0; i != event.channels.length; ++i){
+                if (event.channels[i].name == params.name){
+                    res.json({
+                        status: 'Success',
+                        data: {
+                            url: GLOBAL.DOMAIN_NAME + '/invite/?event-id=' + event_id + '&channel_name=' + params.name + '&email=' + params.email
+                        }
+                    })
+                    return;
+                }
+            }
+            res.json({status:'Error', error: 'No channel with that name exists!'});
+        } else {
+            res.json({ error: 'Event not found' }, 404);
+        }
+
+    }
+    var promise = Event.findOne({id: event_id});
+    promise.exec(HandleFindEvent);
+}
+
+function CreateChannel(req, res){
+    var event_id = req.cookies['event-id'];
+    var params = req.params.all();
+    if (!event_id){
+        res.json({error: 'Not logged into event!'});
+        event_id = params['event-id'];
+        return;
+    }
+    event_id = params['event-id']; //TEST ONLY
+    Event.findOne({id: event_id}).exec(HandleFindEvent);
+    function HandleFindEvent(err, event){
         console.log('FOUND EVENT');
         console.log(event);
+        console.log(err);
         if (err) res.json({ error: 'DB error' }, 500);
         if (event) {
             if (!event.channels){
@@ -37,7 +76,6 @@ function CreateChannel(req, res){
                 name: params.name,
                 //OTHER STUFF FOR PARSE
             });
-                console.log('sdf');
             event.save(function(error){
                 if (error){
                     res.json({status: 'Error occurred when trying to save the event'});
@@ -50,8 +88,6 @@ function CreateChannel(req, res){
         }
 
     }
-    var promise = Event.findOne({id: event_id});
-    promise.exec(HandleFindEvent);
 
 }
 
@@ -62,32 +98,35 @@ function Login(req, res){
     console.log(params);
 
     Event.findOne({name: params.name}).exec(function (err, event) {
-        if (err) res.json({ error: 'DB error' }, 500);
+        if (err) res.json({ status: 'Error', error: 'DB error' }, 500);
 
         if (event) {
             bcrypt.compare(req.body.password, event.password_hash, function (err, match) {
-                if (err) res.json({ error: 'Server error' }, 500);
+                if (err) res.json({ status: 'Error', error: 'Server error' }, 500);
 
                 if (match) {
                     // password match
                     res.cookie('event-id', event.id.toString());
                     delete(event.password_hash); //Do not send hash of password
-                    res.json(event);
+                    res.json({
+                        status: 'Success',
+                        data: event
+                    });
                 } else {
                     // invalid password
                     if (req.session.event) res.clearCookie('event-id');
-                    res.json({ error: 'Invalid password' }, 400);
+                    res.json({ status: 'Error', error: 'Invalid password' }, 400);
                 }
             });
         } else {
-            res.json({ error: 'Event not found' }, 404);
+            res.json({ status: 'Error', error: 'Event not found' }, 404);
         }
     });
 }
 
 function Logout(req, res){
     res.clearCookie('event-id');
-    res.send('Success!');
+    res.json({status: 'Success'});
 }
 
 function CreateEvent(req, res){
@@ -163,7 +202,7 @@ module.exports = {
     CreateEvent: CreateEvent,
     GetEvent: GetEvent,
     CreateChannel: CreateChannel,
+    GetInviteLink: GetInviteLink,
     Login: Login,
     Logout: Logout
 };
-

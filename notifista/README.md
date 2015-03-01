@@ -46,6 +46,9 @@ Form data:
     email: string
     password: string
 
+Returns:
+    equiv. of get user if succeeded, otherwise {status:'Error'}
+
 This will set the user-id cookie for the browser
 ```
 
@@ -85,8 +88,8 @@ Form data:
     name : string
     password : string
 
-Returns: 
-    { status: 'Error|Success' }
+Returns:
+    equiv. of get event if succeeded, otherwise {status:'Error'}
 ```
 Authenticate Event
 ```
@@ -94,6 +97,9 @@ POST /api/auth/event
 Form data:
     name: string
     password: string
+
+Returns:
+    equiv. of get event if succeeded, otherwise {status:'Error'}
 
 This will set the event-id cookie for the browser
 ```

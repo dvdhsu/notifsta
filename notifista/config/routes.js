@@ -51,6 +51,7 @@ module.exports.routes = {
 
   'POST /api/user': 'UserController.CreateUser',
   'GET /api/user' : 'UserController.GetUser',
+  'POST /api/user/channel' : 'UserController.AddEventChannel',
 
   'POST /api/auth/user' : 'UserController.Login',
   'GET /api/auth/user/logout' : 'UserController.Logout',
@@ -60,6 +61,7 @@ module.exports.routes = {
 
   'POST /api/event/channel' : 'EventController.CreateChannel',
   'DELETE /api/event/channel' : 'EventController.DeleteChannel',
+  'GET /event/channel/invite' : 'EventController.GetInviteLink',
 
   'POST /api/event': 'EventController.CreateEvent',
   'GET /api/event' : 'EventController.GetEvent'

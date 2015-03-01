@@ -22,9 +22,8 @@ module.exports = {
         unique: true,
         required: true
     },
-    channels: {
+    events: {
         type: 'array', // Array of channel ids
-        required: true
     }
   }
 };

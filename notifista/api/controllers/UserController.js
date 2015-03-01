@@ -7,32 +7,107 @@
 
 var util = require('./util.js')
 
-function Login(req, res){
+function AddEventChannel(req, res){
+    console.log(req.session);
+    console.log(req.cookies);
+    var user_id = req.cookies['user-id'];
+    var params = req.params.all();
+    if (!user_id){
+        res.json({error: 'Not logged in as a user!'});
+        return;
+    }
+    var params = req.params.all();
+    console.log(req.session);
+    var event_id = params['event-id'];
+    var channel_name = params['channel-name'];
+
+    console.log(event_id);
+    console.log(channel_name);
+    function HandleFindUser(err, user){
+        console.log(user);
+        if (err) res.json({ status: 'Error', error: 'DB error' }, 500);
+        if (user) {
+            if (!user.events){
+                user.events = [];
+            }
+            var has_event = false;
+            var has_channel = false;
+            for (var i = 0; i != user.events.length; ++i){
+                if (user.events[i].id == event_id){
+                    has_event = true;
+                    var channels = user.events[i].channels;
+                    for (var j = 0; j != channels.length; ++j){
+                        if (channels[j].name == channel_name){
+                            has_channel = true;
+                            res.json({
+                                status: 'Error',
+                                data: 'Already subscribed to event'
+                            });
+                            return;
+                        }
+                    }
+                }
+            }
+            if (!has_event){
+                user.events.push({
+                    id: event_id,
+                    channels: []
+                })
+            }
+            if (!has_channel){
+                for(var i = 0; i != user.events.length; ++i){
+                    if (user.events[i].id == event_id){
+                        user.events[i].channels.push({name: channel_name});
+                    }
+                }
+            }
+            console.log(user);
+            user.save(function(error){
+                if (error){
+                    res.json({status: 'Error occurred when trying to save the event'});
+                } else {
+                    res.json({status: 'Success', data: user});
+                }
+            });
+
+        } else {
+            res.json({ status: 'Error', error: 'User not found' }, 404);
+        }
+    }
+
+    User.findOne({id: user_id}).exec(HandleFindUser);
+
+}
+
+function Login(req, res) {
     var bcrypt = require('bcrypt');
     var params = req.params.all();
     console.log(req.session);
 
     User.findOne({email: params.email}).exec(function (err, user) {
-        if (err) res.json({ error: 'DB error' }, 500);
+        if (err) res.json({ status: 'Error', error: 'DB error' }, 500);
 
         if (user) {
             bcrypt.compare(req.body.password, user.password_hash, function (err, match) {
-                if (err) res.json({ error: 'Server error' }, 500);
+                if (err) res.json({status: 'Error', error: 'Server error' }, 500);
 
                 if (match) {
                     // password match
                     res.cookie('user-id', user.id.toString());
                     delete(user.password_hash); //Do not send hash of password
-                    res.json(user);
+                    res.json({
+                        status: 'Success',
+                        data: user
+                    });
                 } else {
                     // invalid password
                     if (req.session.user) res.cookie = ('user-id', null);
-                    res.json({ error: 'Invalid password' }, 400);
+                    res.json({ status: 'Error', error: 'Invalid password' }, 400);
                     //res.send(req.session);
                 }
             });
         } else {
-            res.json({ error: 'User not found' }, 404);
+            res.json({ status: 'Error', error: 'User not found' }, 404);
         }
     });
 }
@@ -50,19 +125,20 @@ function CreateUser(req, res){
     var new_user = {
         email: params.email,
         password_hash: util.hash_password(params.password),
-        channels: ['all'] //we need a non empty array fr some stupid reason
+        events: [] //we need a non empty array fr some stupid reason
     }
     User.findOne({email: params.email})
         .exec(function (err, user){
             if (err || user == null){
-                User.create(new_user)
-            .exec(function (err, created){
+                User.create(new_user).exec(function (err, created){
                 if (err){
                     res.json({
                         status: 'Error',
                         data: err
                     });
                 } else {
+                    res.cookie('user-id', created.id.toString()); //login!
+                    delete(created.password_hash); //Do not send hash of password
                     res.json({
                         status: 'Success',
                         data: created
@@ -89,6 +165,7 @@ function GetUser(req, res){
                         status: 'Error',
                     });
                 } else {
+                    delete(user.password_hash); //Do not send hash of password
                     res.json({
                         status: 'Success',
                         data: user
@@ -134,10 +211,8 @@ module.exports = {
     //  }
     CreateUser: CreateUser,
 
+    AddEventChannel: AddEventChannel,
+
     Login: Login,
     Logout: Logout
-
-
-
 };
-
