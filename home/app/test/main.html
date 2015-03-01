@@ -1,0 +1,150 @@
+<div ng-show="!logged_in()">
+    <div>
+      OUR USER ID: {{ user_id() }}
+      {{ logged_in ()}}
+      <br/>
+      LOGGED IN? {{ logged_in() }}
+    </div>
+
+    <input type="text"
+           ng-model="input.email"
+           autofocus />
+    <input type="text"
+           ng-model="input.password"
+           autofocus />
+    <button ng-click="login()">LOGIN</button>
+
+</div>
+
+<div class="row content" ng-show="logged_in()">
+<button ng-click="logout()">LOGOUT</button>
+
+  <div class="col-md-2">
+
+  </div>
+
+  <div class="col-md-9">
+
+    <div class="row newnotice">
+
+      <input class="newnoticeinput" type="text" placeholder="Write a new notice...">
+
+    </div>
+
+    <div class="row stats">
+
+      <div class="col-md-4 stat stat-left">
+
+        <div class="actual-stat">
+
+          <div class="stat-icon blue">
+
+            <img src="../../../images/users-icon.png" class="icon">
+
+          </div>
+
+          <div class="stat-text">
+
+              <span class="stat-number">187</span>
+              <span class="stat-unit">app users</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-4 stat stat-middle">
+
+        <div class="actual-stat">
+
+          <div class="stat-icon orange">
+
+            <img src="../../../images/broadcasts-icon.png" class="icon">
+
+          </div>
+
+          <div class="stat-text">
+
+            <span class="stat-number">16</span>
+            <span class="stat-unit">&nbspbroadcasts</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-4 stat stat-right">
+
+        <div class="actual-stat">
+
+          <div class="stat-icon green">
+
+            <img src="../../../images/users-icon.png" class="icon">
+
+          </div>
+
+          <div class="stat-text">
+
+            <span class="stat-number">55</span>
+            <span class="stat-unit">somethings</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="row two">
+
+        <div class="col-md-6 feed">
+
+          <div class="actual-feed">
+
+          <script>alert();</script>
+
+              <div class="row box-title red">
+
+                <i class="glyphicon glyphicon-list"></i> &nbsp Broadcast Feed
+
+              </div>
+
+              <div class="feed-item">
+
+                <span class="feed-item-time">19:34</span> &nbsp<span class="feed-item-text">Announcement: Food is ready! Come to the fourth floor to get it.</span>
+
+              </div>
+
+              <div class="feed-item">
+
+                <span class="feed-item-time">22:02</span> &nbsp<span class="feed-item-text">Announcement: Food is ready! Come to the fourth floor to get it.</span>
+
+              </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-6 graph">
+
+          <div class="actual-graph">
+
+            <div class="row box-title blue">
+
+              <i class="glyphicon glyphicon-folder-open"></i> &nbsp Notification Open Rate
+
+            </div>
+
+          </div>
+
+        </div>
+
+    </div>
+
+  </div>
+
+</div>
+<!---->

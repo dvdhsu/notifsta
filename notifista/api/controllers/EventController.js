@@ -7,6 +7,28 @@
 
 var util = require('./util');
 
+function GetNumberOfSubscribers(req, res){
+    console.log(req.session);
+    console.log(req.cookies);
+    var event_name = req.cookies['event-name'];
+    var params = req.params.all();
+
+    var query = {
+        where : {
+            event_name: event_name,
+        }
+    }
+    if (last_time){
+        query.where.createdAt = { '>' : new Date(last_time) }
+    }
+    console.log(query);
+    User.find(query).exec(function(err, data){
+        console.log(err);
+        console.log(data);
+        res.json(data);
+    })
+}
+
 function GetInviteLink(req, res){
     console.log(req.session);
     console.log(req.cookies);
@@ -104,7 +126,7 @@ function Login(req, res){
 
                 if (match) {
                     // password match
-                    res.cookie('event-name', event.name.toString(),{httpOnly: true, expires: new Date(Date.now() + 10*60*1000)}); //login!);
+                    res.cookie('event-name', event.name.toString(),{httpOnly: false, expires: new Date(Date.now() + 10*60*1000)}); //login!);
                     delete(event.password_hash); //Do not send hash of password
                     res.json({
                         status: 'Success',
@@ -153,7 +175,7 @@ function CreateEvent(req, res){
                                 data: err
                             });
                         } else {
-                            res.cookie('event-name', created.name.toString(), {httpOnly: true, expires: new Date(Date.now() + 10*60*1000)}); //login!)
+                            res.cookie('event-name', created.name.toString(), {httpOnly: false, expires: new Date(Date.now() + 10*60*1000)}); //login!)
                             delete(created.password_hash); //Do not send hash of password
                             res.json({
                                 status: 'Success',
