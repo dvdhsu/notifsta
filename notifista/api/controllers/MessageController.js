@@ -39,7 +39,7 @@ function SendMessage(req, res){
     var params = req.params.all();
 
     var event_name = req.cookies['event-name'];
-    var channel_name = params['channel-name'];
+    var channel_names = params['channel-names'].split(',');
     var message = params.message;
 
     if (!event_name){
@@ -50,7 +50,7 @@ function SendMessage(req, res){
     var new_message = {
         message: message,
         event_name: event_name,
-        channel_name: channel_name
+        channel_name: channel_names
     };
 
     Message.create(new_message).exec(HandleMessageCreate);
@@ -65,7 +65,7 @@ function SendMessage(req, res){
                 status: 'Success',
                 data: created
             });
-            util.PushNotification(event_name, channel_name, message);
+            util.PushNotification(event_name, channel_names, message);
         }
     }
 }
