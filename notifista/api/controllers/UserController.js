@@ -10,7 +10,7 @@ var util = require('./util.js')
 function AddEventChannel(req, res){
     console.log(req.session);
     console.log(req.cookies);
-    var user_id = req.cookies['user-id'];
+    var user_id = req.truecookies['user-id'];
     var params = req.params.all();
     if (!user_id){
         res.json({error: 'Not logged in as a user!'});
@@ -18,10 +18,9 @@ function AddEventChannel(req, res){
     }
     var params = req.params.all();
     console.log(req.session);
-    var event_id = params['event-id'];
+    var event_name = params['event-name'];
     var channel_name = params['channel-name'];
 
-    console.log(event_id);
     console.log(channel_name);
     function HandleFindUser(err, user){
         console.log(user);
@@ -33,7 +32,7 @@ function AddEventChannel(req, res){
             var has_event = false;
             var has_channel = false;
             for (var i = 0; i != user.events.length; ++i){
-                if (user.events[i].id == event_id){
+                if (user.events[i].name == event_name){
                     has_event = true;
                     var channels = user.events[i].channels;
                     for (var j = 0; j != channels.length; ++j){
@@ -50,13 +49,13 @@ function AddEventChannel(req, res){
             }
             if (!has_event){
                 user.events.push({
-                    id: event_id,
+                    name: event_name,
                     channels: []
                 })
             }
             if (!has_channel){
-                for(var i = 0; i != user.events.length; ++i){
-                    if (user.events[i].id == event_id){
+                for (var i = 0; i != user.events.length; ++i){
+                    if (user.events[i].name == event_name){
                         user.events[i].channels.push({name: channel_name});
                     }
                 }
@@ -93,7 +92,7 @@ function Login(req, res) {
 
                 if (match) {
                     // password match
-                    res.cookie('user-id', user.id.toString());
+                    res.cookie('user-id', user.id.toString(),{httpOnly: false, expires: new Date(Date.now() + 10*60*1000)}); //login!
                     delete(user.password_hash); //Do not send hash of password
                     res.json({
                         status: 'Success',
@@ -101,7 +100,7 @@ function Login(req, res) {
                     });
                 } else {
                     // invalid password
-                    if (req.session.user) res.cookie = ('user-id', null);
+                    if (req.session.user) res.clearCookie('user-id');
                     res.json({ status: 'Error', error: 'Invalid password' }, 400);
                     //res.send(req.session);
                 }
@@ -137,7 +136,7 @@ function CreateUser(req, res){
                         data: err
                     });
                 } else {
-                    res.cookie('user-id', created.id.toString()); //login!
+                    res.cookie('user-id', created.id.toString(),{httpOnly: false, expires: new Date(Date.now() + 10*60*1000)}); //login!
                     delete(created.password_hash); //Do not send hash of password
                     res.json({
                         status: 'Success',

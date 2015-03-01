@@ -32,10 +32,6 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'index'
-  },
-
   '/login': {
     view: 'login'
   },
@@ -58,6 +54,9 @@ module.exports.routes = {
 
   'POST /api/auth/event' : 'EventController.Login',
   'GET /api/auth/event/logout' : 'EventController.Logout',
+
+  'POST /api/message' : 'MessageController.SendMessage',
+  'GET /api/message' : 'MessageController.GetMessages',
 
   'POST /api/event/channel' : 'EventController.CreateChannel',
   'DELETE /api/event/channel' : 'EventController.DeleteChannel',
