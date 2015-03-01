@@ -47,14 +47,23 @@ function SendMessage(req, res){
         return;
     }
 
-    var new_message = {
-        message: message,
-        event_name: event_name,
-        channel_name: channel_names
-    };
+    var sent = false;
 
-    Message.create(new_message).exec(HandleMessageCreate);
+    channel_names.map(function(channel_name){
+        var new_message = {
+            message: message,
+            event_name: event_name,
+            channel_name: channel_name
+        };
+        console.log(new_message);
+        Message.create(new_message).exec(HandleMessageCreate);
+    })
     function HandleMessageCreate(err, created){
+        console.log('SDF');
+        if (sent){
+            return;
+        }
+        sent = true;
         if (err){
             res.json({
                 status: 'Error',
@@ -65,7 +74,7 @@ function SendMessage(req, res){
                 status: 'Success',
                 data: created
             });
-            util.PushNotification(event_name, channel_names, message);
+            util.PushNotification(created);
         }
     }
 }
