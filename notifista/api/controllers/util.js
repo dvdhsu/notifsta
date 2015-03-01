@@ -6,7 +6,6 @@ var APP_ID = 'zV50kkuGI8esJY0D6eAoy90bMgX3G2jWeTOTe1Rw';
 var MASTER_KEY = 'LSjlnMISaVqKMKkRnQKmaZX0gWahZFSNCJUSF6Gq';
 
 
-
 module.exports = {
     hash_password: function(password){
         var salt = bcrypt.genSaltSync(10);
