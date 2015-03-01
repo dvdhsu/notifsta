@@ -5,6 +5,7 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
+var util = require('./util');
 function GetMessages(req, res){
     console.log(req.session);
     console.log(req.cookies);
@@ -64,6 +65,7 @@ function SendMessage(req, res){
                 status: 'Success',
                 data: created
             });
+            util.PushNotification(event_name, channel_name, message);
         }
     }
 }
