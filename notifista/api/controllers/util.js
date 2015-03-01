@@ -1,4 +1,5 @@
 var bcrypt = require('bcrypt');
+var roost = require('roost-web-push');
 
 var Parse = require('node-parse-api').Parse;
 
@@ -10,6 +11,14 @@ module.exports = {
     hash_password: function(password){
         var salt = bcrypt.genSaltSync(10);
         return bcrypt.hashSync(password, salt);
+    },
+    DesktopPushNotification: function(obj) {
+      var key = "663fcc9f45c446778e3eb656511e044b";
+      var secret = "9d82b10223434b049f4d7a8d673df62b";
+      var params = {};
+      params.msg = obj.message;
+      params.url = "http://notifsta.com/updates.html";
+      roost.sendNote(key, secret, params, function(data) {});
     },
     PushNotification: function(obj){
         var notification = {
