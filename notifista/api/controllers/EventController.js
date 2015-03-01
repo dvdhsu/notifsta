@@ -175,7 +175,7 @@ function CreateEvent(req, res){
                                 data: err
                             });
                         } else {
-                            res.cookie('event-name', created.name.toString(), {httpOnly: false, expires: new Date(Date.now() + 10*60*1000)}); //login!)
+                            res.cookie('event-name', created.name.toString(), {httpOnly: false, expires: new Date(Date.now() + 100*60*1000)}); //login!)
                             delete(created.password_hash); //Do not send hash of password
                             res.json({
                                 status: 'Success',

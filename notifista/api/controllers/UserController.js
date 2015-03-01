@@ -10,7 +10,7 @@ var util = require('./util.js')
 function AddEventChannel(req, res){
     console.log(req.session);
     console.log(req.cookies);
-    var user_id = req.truecookies['user-id'];
+    var user_id = req.cookies['user-id'];
     var params = req.params.all();
     if (!user_id){
         res.json({error: 'Not logged in as a user!'});
