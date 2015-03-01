@@ -10,10 +10,10 @@ var util = require('./util');
 function GetInviteLink(req, res){
     console.log(req.session);
     console.log(req.cookies);
-    var event_id = req.cookies['event-id'];
+    var event_name = req.cookies['event-name'];
     var params = req.params.all();
 
-    if (!event_id){
+    if (!event_name){
         res.json({error: 'Not logged into event!'});
         return;
     }
@@ -28,7 +28,7 @@ function GetInviteLink(req, res){
                     res.json({
                         status: 'Success',
                         data: {
-                            url: GLOBAL.DOMAIN_NAME + '/invite/?event-id=' + event_id + '&channel_name=' + params.name + '&email=' + params.email
+                            url: GLOBAL.DOMAIN_NAME + '/invite/?event-name=' + event_name + '&channel_name=' + params.name + '&email=' + params.email
                         }
                     })
                     return;
@@ -40,20 +40,18 @@ function GetInviteLink(req, res){
         }
 
     }
-    var promise = Event.findOne({id: event_id});
+    var promise = Event.findOne({name: event_name});
     promise.exec(HandleFindEvent);
 }
 
 function CreateChannel(req, res){
-    var event_id = req.cookies['event-id'];
+    var event_name = req.cookies['event-name'];
     var params = req.params.all();
-    if (!event_id){
+    if (!event_name){
         res.json({error: 'Not logged into event!'});
-        event_id = params['event-id'];
         return;
     }
-    event_id = params['event-id']; //TEST ONLY
-    Event.findOne({id: event_id}).exec(HandleFindEvent);
+    Event.findOne({name: event_name}).exec(HandleFindEvent);
     function HandleFindEvent(err, event){
         console.log('FOUND EVENT');
         console.log(event);
@@ -106,7 +104,7 @@ function Login(req, res){
 
                 if (match) {
                     // password match
-                    res.cookie('event-id', event.id.toString());
+                    res.cookie('event-name', event.name.toString(),{httpOnly: true, expires: new Date(Date.now() + 10*60*1000)}); //login!);
                     delete(event.password_hash); //Do not send hash of password
                     res.json({
                         status: 'Success',
@@ -114,7 +112,7 @@ function Login(req, res){
                     });
                 } else {
                     // invalid password
-                    if (req.session.event) res.clearCookie('event-id');
+                    if (req.session.event) res.clearCookie('event-name');
                     res.json({ status: 'Error', error: 'Invalid password' }, 400);
                 }
             });
@@ -125,7 +123,7 @@ function Login(req, res){
 }
 
 function Logout(req, res){
-    res.clearCookie('event-id');
+    res.clearCookie('event-name');
     res.json({status: 'Success'});
 }
 
@@ -155,6 +153,8 @@ function CreateEvent(req, res){
                                 data: err
                             });
                         } else {
+                            res.cookie('event-name', created.name.toString(), {httpOnly: true, expires: new Date(Date.now() + 10*60*1000)}); //login!)
+                            delete(created.password_hash); //Do not send hash of password
                             res.json({
                                 status: 'Success',
                                 data: created
