@@ -5,7 +5,7 @@
             return ($cookies['user-id'] != null);
         }
         function GetEventLoggedIn(){
-            return ($cookies['event-id'] != null);
+            return ($cookies['event-name'] != null);
         }
 
         Event = null;
