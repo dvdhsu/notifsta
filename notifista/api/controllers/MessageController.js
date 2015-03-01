@@ -39,7 +39,7 @@ function SendMessage(req, res){
     var params = req.params.all();
 
     var event_name = req.cookies['event-name'];
-    var channel_names = params['channel-names'].split(',');
+    var channel_name = params['channel-name'];
     var message = params.message;
 
     if (!event_name){
@@ -47,23 +47,13 @@ function SendMessage(req, res){
         return;
     }
 
-    var sent = false;
-
-    channel_names.map(function(channel_name){
-        var new_message = {
-            message: message,
-            event_name: event_name,
-            channel_name: channel_name
-        };
-        console.log(new_message);
-        Message.create(new_message).exec(HandleMessageCreate);
-    })
+    var new_message = {
+        message: message,
+        event_name: event_name,
+        channel_name: channel_name
+    };
+    Message.create(new_message).exec(HandleMessageCreate);
     function HandleMessageCreate(err, created){
-        console.log('SDF');
-        if (sent){
-            return;
-        }
-        sent = true;
         if (err){
             res.json({
                 status: 'Error',
