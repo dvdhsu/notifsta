@@ -4,7 +4,7 @@
     <script src="http://fb.me/react-0.12.2.js"></script>
     <script src="http://fb.me/JSXTransformer-0.12.2.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
-    <script src='//cdn.goroost.com/roostjs/663fcc9f45c446778e3eb656511e044b' async></script>
+    <script src='http//cdn.goroost.com/roostjs/663fcc9f45c446778e3eb656511e044b' async></script>
   </head>
   <body>
     <div id="example"></div>
@@ -35,9 +35,6 @@
 
       var Channel = React.createClass({
         render: function() {
-          console.log("PROOOOPS");
-          console.log(this.props);
-          console.log(this.props.channel.messages);
           var messageNodes = this.props.channel.messages.map(function (message) {
             return (
               <Message message={message} />
@@ -75,7 +72,6 @@
                   }
                 });
               });
-              // do something with data
             }.bind(this),
             error: function(xhr, status, err) {
               console.error(this.props.url, status, err.toString());
@@ -116,7 +112,7 @@
 
 
       React.render(
-        <Event eventName="event1" pollInterval={2000} url="http://188.166.9.25/api/user/?email=lukas@me.com" />,
+        <Event eventName="HackLondon" pollInterval={2000} url="http://188.166.9.25/api/user/?email=lukas@me.com" />,
         document.getElementById('example')
       );
     </script>
