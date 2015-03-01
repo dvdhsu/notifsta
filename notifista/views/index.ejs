@@ -27,6 +27,7 @@
   <body>
 
     <div ng-app="notifista" class="container-fluid">
+      <div ng-controller="MainController">
 
       <div class="row header">
 
@@ -40,20 +41,20 @@
 
         <div class="col-md-10 eventname">
 
-          <h1>HackLondon</h1>
+          <h1>{{event}}</h1>
 
         </div>
 
       </div>
-      <div ng-controller="EventLogin"
-         ng-include src="'/home/app/event_login/main.html'">
-      </div>
-      <div ng-controller="CreateChannel"
-         ng-include src="'/home/app/create_channel/main.html'">
+
+      <div ng-hide="logged_in()" ng-controller="EventLogin" ng-include src="'/home/app/event_login/main.html'"></div>
+      
+      <div ng-controller="CreateChannel" ng-include src="'/home/app/create_channel/main.html'"></div>
+
+      <div ng-controller="Test" ng-include src="'/home/app/test/main.html'"></div>
+
       </div>
 
-      <div ng-controller="Test" 
-         ng-include src="'/home/app/test/main.html'"></div>
     </div>
 
   </body>

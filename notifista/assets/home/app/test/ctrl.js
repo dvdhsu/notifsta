@@ -5,8 +5,7 @@
     angular.module('notifista.controllers').controller('Test',
     ['$scope', 'NotifistaHttp', 'StateService', '$cookies', function($scope, NotifistaHttp, StateService, $cookies) {
 
-        $scope.screen = '';
-        $scope.logged_in = StateService.GetUserLoggedIn;
+        $scope.logged_in = StateService.GetEventLoggedIn;
 
         // Need to make 'cmd' a child element of input. The issue is
         // documented here:
