@@ -21,6 +21,10 @@
   <!--CSS-->
   <link rel="stylesheet" type="text/css" href="styles/style.css">
 
+  <!--ng-tags-input-->
+  <script src="bower_components/ng-tags-input/ng-tags-input.js"></script>
+  <link rel="stylesheet" type="text/css" href="bower_components/ng-tags-input/ng-tags-input.css">
+
   <script src="/app/util/State.js"></script>
 
   </head>
@@ -29,27 +33,7 @@
     <div ng-app="notifista" class="container-fluid">
       <div ng-controller="MainController">
 
-      <div class="row header">
-
-        <div class="col-md-2">
-
-          <div class="logo">
-
-          </div>
-
-        </div>
-
-        <div class="col-md-10 eventname">
-
-          <h1>{{event}}</h1>
-
-        </div>
-
-      </div>
-
       <div ng-hide="logged_in()" ng-controller="EventLogin" ng-include src="'/app/event_login/main.html'"></div>
-      
-      <div ng-controller="CreateChannel" ng-include src="'/app/create_channel/main.html'"></div>
 
       <div ng-controller="Test" ng-include src="'/app/test/main.html'"></div>
 

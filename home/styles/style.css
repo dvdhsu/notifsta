@@ -47,7 +47,7 @@ body {
 }
 
 .logo {
-	background: #2e7fe4;
+	background: #e67e22;
 	height: 175px;
 	width: 175px;
 }
@@ -69,6 +69,27 @@ body {
 	height: 100%;
 	border-radius: 5px;
 	padding-left: 30px;
+}
+
+.channel-list {
+	padding-left: 20px;
+}
+
+.newchannelinput {
+	margin-top: 30px;
+	display: block;
+	background: white;
+	color: gray;
+	width: 100%;
+	border-radius: 5px;
+	border: 0;
+	-webkit-font-smoothing: antialiased;
+	font-size: 1em;
+	width: 100%;
+	border-radius: 5px;
+	height:55px;
+	text-align:center;
+	font-size: 1.4em;
 }
 
 .stats {
@@ -178,6 +199,31 @@ body {
 	color: rgb(100,100,100);
 	-webkit-font-smoothing: antialiased;
 	padding-right: 20px;
+}
+
+.newchannel {
+	border: 1px solid rgba(0,0,0,0.2);
+	border-radius: 7px;
+	padding: 10px;
+	background: none;
+	color: gray;
+	-webkit-font-smoothing: antialiased;
+}
+
+.newchannel:hover {
+	border: 1px solid rgba(0,0,0,0.8);
+	color: rgba(0,0,0,0.8);
+}
+
+.logout {
+	margin-top: 80px;
+	color: white;
+	cursor: pointer;
+	-webkit-font-smoothing: antialiased !important;
+}
+
+.logout:hover {
+	color: #e74c3c;
 }
 
 .feed-item-time {

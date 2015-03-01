@@ -23,7 +23,7 @@
         };
 
         $scope.event_id = function(){
-            return $cookies['event-id'];
+            return $cookies['sails.sid'];
         }
         console.log($cookies);
 

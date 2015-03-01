@@ -1,8 +1,17 @@
 <div>
+	<form ng-submit="create_channel()">
     <input type="text"
+    		class="newchannelinput"
            ng-model="input.channel_name"
-           autofocus />
-    <button ng-click="create_channel()">Create Channel</button>
-    {{ status }}
+           placeholder="New Channel"
+           autofocus /><br>
+<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+    </form>
+    <div class="channel-list" ng-repeat="channel in event.channels">
+
+      #{{ channel.name }}
+
+    </div>
+    <!--<div class="newchannel-status">{{ status }}</div>-->
 </div>
 
