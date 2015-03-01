@@ -126,7 +126,7 @@ function Login(req, res){
 
                 if (match) {
                     // password match
-                    res.cookie('event-name', event.name.toString(),{httpOnly: true, expires: new Date(Date.now() + 10*60*1000)}); //login!);
+                    res.cookie('event-name', event.name.toString(),{httpOnly: false, expires: new Date(Date.now() + 10*60*1000)}); //login!);
                     delete(event.password_hash); //Do not send hash of password
                     res.json({
                         status: 'Success',
@@ -175,7 +175,7 @@ function CreateEvent(req, res){
                                 data: err
                             });
                         } else {
-                            res.cookie('event-name', created.name.toString(), {httpOnly: true, expires: new Date(Date.now() + 10*60*1000)}); //login!)
+                            res.cookie('event-name', created.name.toString(), {httpOnly: false, expires: new Date(Date.now() + 10*60*1000)}); //login!)
                             delete(created.password_hash); //Do not send hash of password
                             res.json({
                                 status: 'Success',
