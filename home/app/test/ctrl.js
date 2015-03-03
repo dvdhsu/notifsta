@@ -3,7 +3,7 @@
  */
 (function(){
     angular.module('notifista.controllers').controller('Test',
-    ['$scope', 'NotifistaHttp', 'StateService', '$cookies', function($scope, NotifistaHttp, StateService, $cookies) {
+    ['$scope', 'NotifistaHttp', 'StateService', '$cookies', '$timeout', function($scope, NotifistaHttp, StateService, $cookies, $timeout) {
 
         $scope.logged_in = StateService.GetEventLoggedIn;
 
@@ -35,7 +35,9 @@
             })
         };
 
-        $scope.broadcast = '';
+        $scope.input = {
+            broadcast: ''
+        }
         $scope.step2 = false;
 
         $scope.user_id = function(){
@@ -50,13 +52,22 @@
             $scope.step2 = true;
         }
 
-        $scope.finalstep = function(eventname, broadcast, channels){
-            var list = channels.map(function(o){
+        $scope.finalstep = function(){
+            var eventname = $scope.event_name();
+            var broadcast = $scope.input.broadcast;
+            var list = $scope.tags.map(function(o){
                 return o.text;
             })
             var p =NotifistaHttp.Broadcast(eventname, broadcast, list);
             p.success(function(e){
                 console.log(e);
+                $timeout(function() {
+                    console.log($scope.input);
+                    $scope.step2 = false;
+                    console.log($scope.input.broadcast);
+                    $scope.input.broadcast = '';
+                });
+                
             })
             p.error(function(e){
                 console.log(e);

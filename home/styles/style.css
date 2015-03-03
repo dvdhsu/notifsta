@@ -6,6 +6,21 @@ textarea:focus, input:focus{
     outline: 0;
 }
 
+.tags {
+	background: none !important;
+	border: none !important;
+	box-shadow:none !important;
+	font-family: 'Avenir-Medium' !important;
+	-webkit-font-smoothing: antialiased !important;
+	margin-left: 20px !important;
+	margin-bottom: 7px !important;
+}
+
+.tag-item {
+	border: 0 !important;
+	background: #f1f2f7 !important;
+}
+
 @font-face {
   font-family: 'Avenir-Heavy';
   src: url('css/Avenir-Heavy.eot?#iefix') format('embedded-opentype'),  url('css/Avenir-Heavy.woff') format('woff'), url('css/Avenir-Heavy.ttf')  format('truetype'), url('css/Avenir-Heavy.svg#Avenir-Heavy') format('svg');

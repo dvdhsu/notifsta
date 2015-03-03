@@ -54,12 +54,12 @@
 
       <form ng-submit="nextstep()">
 
-        <input class="newnoticeinput" type="text" placeholder="Write a new notice..." ng-model="broadcast" ng-show="!step2">
+        <input class="newnoticeinput" type="text" placeholder="Write a new notice..." ng-model="input.broadcast" ng-show="!step2">
         <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
 
       </form>
 
-      <form ng-submit="finalstep(event_name(),broadcast,tags)">
+      <form ng-submit="finalstep()">
 
       <tags-input ng-show="step2" ng-model="tags">
 
@@ -79,7 +79,7 @@
 
           <div class="stat-icon blue">
 
-            <img src="../../../images/users-icon.png" class="icon">
+            <img src="http://i.imgur.com/EAvk6oK.png" class="icon">
 
           </div>
 
@@ -100,7 +100,7 @@
 
           <div class="stat-icon orange">
 
-            <img src="../../../notifista/assets/images/broadcasts-icon.png" class="icon">
+            <img src="http://i.imgur.com/pdRyqvB.png" class="icon">
 
           </div>
 
@@ -121,7 +121,7 @@
 
           <div class="stat-icon green">
 
-            <img src="../../../images/users-icon.png" class="icon">
+            <img src="http://i.imgur.com/EAvk6oK.png" class="icon">
 
           </div>
 
