@@ -66,6 +66,7 @@ function SendMessage(req, res){
             });
             util.DesktopPushNotification(created);
             util.PushNotification(created);
+    	    Message.publishCreate(created);
         }
     }
 }
