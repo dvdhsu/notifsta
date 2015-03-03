@@ -23,6 +23,14 @@
 
   <script src="/app/util/State.js"></script>
 
+  <!-- quick test -->
+  <script src="/socket.io/sails.io.js"></script>
+  <script>
+    io.sails.url = 'http://notifsta.com:1337';
+    io.socket.get("/message", function(resData, jwres) {console.log(resData); console.log(jwres)})
+    io.socket.on("message", function(event){console.log(event);})
+  </script>
+
   </head>
   <body>
 
