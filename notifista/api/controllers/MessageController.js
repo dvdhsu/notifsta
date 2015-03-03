@@ -64,7 +64,9 @@ function SendMessage(req, res){
                 status: 'Success',
                 data: created
             });
+            util.DesktopPushNotification(created);
             util.PushNotification(created);
+    	    Message.publishCreate(created);
         }
     }
 }
