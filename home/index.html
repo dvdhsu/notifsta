@@ -32,7 +32,7 @@
   <script>
     io.sails.url = 'http://notifsta.com:1337';
     io.socket.get("/message", function(resData, jwres) {console.log(resData); console.log(jwres)})
-    io.socket.on("message", function(event){console.log(event);})
+    io.socket.on("message", function(event){console.log('Received information from websocket: '); console.log(event);})
   </script>
 
   </head>
