@@ -57,6 +57,7 @@ module.exports.routes = {
 
   'POST /api/message' : 'MessageController.SendMessage',
   'GET /api/message' : 'MessageController.GetMessages',
+  'POST/api/message/response' : 'MessageController.HandleResponse',
 
   'POST /api/event/channel' : 'EventController.CreateChannel',
   'DELETE /api/event/channel' : 'EventController.DeleteChannel',

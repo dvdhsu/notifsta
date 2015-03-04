@@ -19,7 +19,17 @@ module.exports = {
         message: {
             type: 'string',
             required: true
+        },
+        type: {
+            type: 'string'
+        },
+        answers: {
+            type : 'array'
+        },
+        results: {
+            type: 'array'
         }
+
     }
 };
 

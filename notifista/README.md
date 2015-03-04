@@ -108,3 +108,46 @@ Logout Event
 ```
 GET /api/auth/event/logout
 ```
+
+
+Get Message
+```
+GET /api/message 
+Url args:
+    event_name
+    channel_name
+    user_email
+    last_time (OPTIONAL)
+
+Returns 
+{
+    event_name: string,
+    channel_name: string,
+    message: message,
+    answers : null | { name: string, value: string }
+    result: null | { name: string, value: string  } //user's response
+
+}
+
+```
+
+Create Message
+```
+POST /api/message
+Form data:
+    event_name : string 
+    channel_name : string 
+    message : string 
+    answers: null { name: string, value: string }
+
+returns same as get message w/o result
+```
+
+Send response for a survey
+
+```
+POST /api/message/response
+Form data:
+    id: string,
+    answer : stringified JSON answer object
+```
