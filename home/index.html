@@ -1,10 +1,16 @@
 <html>
   <head>
+  <!--Angular -->
   <script src="/bower_components/angular/angular.min.js"></script>
   <script src="/bower_components/angular-cookies/angular-cookies.min.js"></script>
+
+  <!--Moment.js time library -->
+  <script src="/bower_components/moment/moment.js"></script>
+
   <script src="/app.js"></script>
 
-  <script src="/app/test/ctrl.js"></script>
+  <script src="/app/admin/ctrl.js"></script>
+  <script src="/app/user/ctrl.js"></script>
   <script src="/app/event_login/ctrl.js"></script>
   <script src="/app/create_channel/ctrl.js"></script>
 
@@ -28,26 +34,17 @@
   <script src="/app/util/State.js"></script>
 
   <!-- quick test -->
-  <script src="/socket.io/sails.io.js"></script>
-  <script>
-    io.sails.url = 'http://notifsta.com:1337';
-    io.socket.get("/message", function(resData, jwres) {console.log(resData); console.log(jwres)})
-    io.socket.on("message", function(event){console.log('Received information from websocket: '); console.log(event);})
-  </script>
+  <!--<script src="/socket.io/sails.io.js"></script>-->
 
   </head>
   <body>
-
     <div ng-app="notifista" class="container-fluid">
       <div ng-controller="MainController">
 
-      <div ng-hide="logged_in()" ng-controller="EventLogin" ng-include src="'/app/event_login/main.html'"></div>
-
-      <div ng-controller="Test" ng-include src="'/app/test/main.html'"></div>
-
+        <!--<div ng-controller="AdminPanelController" ng-include src="'/app/admin/main.html'"></div>-->
+        <div ng-controller="UserPanelController" ng-include src="'/app/user/main.html'"></div>
       </div>
 
     </div>
-
   </body>
 </html>

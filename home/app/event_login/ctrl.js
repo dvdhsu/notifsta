@@ -7,7 +7,7 @@
  *
  */
 (function(){
-    angular.module('notifista.controllers').controller('EventLogin',
+    angular.module('notifista.controllers').controller('EventLoginController',
         ['$scope', 'NotifistaHttp', 'StateService', '$cookies',function($scope, NotifistaHttp, StateService, $cookies) {
             console.log("HWFEWF")
 
@@ -50,7 +50,6 @@
             p.error(function(e){
                 console.log(e);
             })
-
         }
     }]);
 })();

@@ -2,7 +2,7 @@
  *
  */
 (function(){
-    angular.module('notifista.controllers').controller('Test',
+    angular.module('notifista.controllers').controller('AdminPanelController',
     ['$scope', 'NotifistaHttp', 'StateService', '$cookies', '$timeout', function($scope, NotifistaHttp, StateService, $cookies, $timeout) {
 
         $scope.logged_in = StateService.GetEventLoggedIn;
