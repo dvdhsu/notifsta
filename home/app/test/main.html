@@ -16,10 +16,35 @@
 
 </div>
 
-<div class="row content" ng-show="logged_in()">
-<button ng-click="logout()">LOGOUT</button>
+<div class="row header">
 
   <div class="col-md-2">
+
+    <div class="logo">
+
+    </div>
+
+  </div>
+
+  <div class="col-md-8 eventname">
+
+    <h1>{{ event.name }}</h1>
+
+  </div>
+
+  <div class="col-md-2">
+
+    <div class="logout" ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i> &nbsp Log Out</div>
+
+  </div>
+
+</div>
+
+<div class="row content" ng-show="logged_in()">
+
+  <div class="col-md-2">
+
+    <div ng-controller="CreateChannel" ng-include src="'/app/create_channel/main.html'"></div>
 
   </div>
 
@@ -27,7 +52,22 @@
 
     <div class="row newnotice">
 
-      <input class="newnoticeinput" type="text" placeholder="Write a new notice...">
+      <form ng-submit="nextstep()">
+
+        <input class="newnoticeinput" type="text" placeholder="Write a new notice..." ng-model="input.broadcast" ng-show="!step2">
+        <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+
+      </form>
+
+      <form ng-submit="finalstep()">
+
+      <tags-input ng-show="step2" ng-model="tags">
+
+      </tags-input>
+
+      <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+
+      </form>
 
     </div>
 
@@ -39,7 +79,7 @@
 
           <div class="stat-icon blue">
 
-            <img src="../../../images/users-icon.png" class="icon">
+            <img src="http://i.imgur.com/EAvk6oK.png" class="icon">
 
           </div>
 
@@ -60,7 +100,7 @@
 
           <div class="stat-icon orange">
 
-            <img src="../../../images/broadcasts-icon.png" class="icon">
+            <img src="http://i.imgur.com/pdRyqvB.png" class="icon">
 
           </div>
 
@@ -81,7 +121,7 @@
 
           <div class="stat-icon green">
 
-            <img src="../../../images/users-icon.png" class="icon">
+            <img src="http://i.imgur.com/EAvk6oK.png" class="icon">
 
           </div>
 
@@ -103,8 +143,6 @@
         <div class="col-md-6 feed">
 
           <div class="actual-feed">
-
-          <script>alert();</script>
 
               <div class="row box-title red">
 

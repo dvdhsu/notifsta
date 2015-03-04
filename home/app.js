@@ -1,6 +1,7 @@
 angular.module('notifista', [
     'notifista.controllers',
-    'notifista.services'
+    'notifista.services',
+    'ngTagsInput'
 ]);
 
 angular.module('notifista.services', ['ngCookies']);

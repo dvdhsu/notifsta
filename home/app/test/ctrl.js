@@ -3,7 +3,7 @@
  */
 (function(){
     angular.module('notifista.controllers').controller('Test',
-    ['$scope', 'NotifistaHttp', 'StateService', '$cookies', function($scope, NotifistaHttp, StateService, $cookies) {
+    ['$scope', 'NotifistaHttp', 'StateService', '$cookies', '$timeout', function($scope, NotifistaHttp, StateService, $cookies, $timeout) {
 
         $scope.logged_in = StateService.GetEventLoggedIn;
 
@@ -15,10 +15,75 @@
             password: 'asdfasdf'
         };
 
+        $scope.tags = [];
+
+        $scope.loadTags = function(eventname) {
+            var p = NotifistaHttp.LoadTags(eventname);
+            p.success(function(e){
+                $scope.loadedtags = [];
+                console.log(e);
+                var n = e.data.channels.length;
+                for(var i=0; i<n; i++){
+                    $scope.loadedtags.push({'text': e.data.channels[i].name});
+                }
+                console.log($scope.loadedtags);
+                return $scope.loadedtags;
+                
+            })
+            p.error(function(e){
+                console.log(e);
+            })
+        };
+
+        $scope.input = {
+            broadcast: ''
+        }
+        $scope.step2 = false;
+
         $scope.user_id = function(){
             return $cookies['user-id'];
         }
-        console.log($cookies);
+
+        $scope.event_name = function(){
+            return $cookies['event-name'];
+        }
+
+        $scope.nextstep = function(){
+            $scope.step2 = true;
+        }
+
+        $scope.finalstep = function(){
+            var eventname = $scope.event_name();
+            var broadcast = $scope.input.broadcast;
+            var list = $scope.tags.map(function(o){
+                return o.text;
+            })
+            var p =NotifistaHttp.Broadcast(eventname, broadcast, list);
+            p.success(function(e){
+                console.log(e);
+                $timeout(function() {
+                    console.log($scope.input);
+                    $scope.step2 = false;
+                    console.log($scope.input.broadcast);
+                    $scope.input.broadcast = '';
+                });
+                
+            })
+            p.error(function(e){
+                console.log(e);
+            })
+        }
+        
+        $scope.GetEvent = function(event_name){
+            var p = NotifistaHttp.GetEvent(event_name);
+            p.success(function(e){
+                console.log(e);
+                $scope.event = e.data;
+            })
+            p.error(function(e){
+                console.log(e);
+            })
+        }
 
         $scope.submit = function(cmd){
             $scope.input.cmd = '';
@@ -39,9 +104,9 @@
         $scope.login = function(){
             var p = NotifistaHttp.LoginEvent( $scope.input.name, $scope.input.password);
             console.log(p);
-            p.success(function(user){
-                console.log(user);
-                StateService.User = user;
+            p.success(function(event){
+                console.log(event);
+                StateService.Event = event;
             })
             p.error(function(e){
                 console.log(e);
@@ -62,6 +127,8 @@
         function MsgArrived(response) {
             $scope.screen += response.data;
         }
+
+        $scope.GetEvent($scope.event_name());
 
     }]);
 })();

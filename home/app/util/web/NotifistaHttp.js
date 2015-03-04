@@ -9,6 +9,23 @@
                 });
         }
 
+        function GetEvent(name) {
+            console.log(name);
+            return $http.get('api/event?name='+name);
+        }
+
+        function Broadcast(eventname, broadcast, channels){
+            return $http.post('/api/message', {
+                    'event-name': eventname,
+                    'message': broadcast,
+                    'channel-name': channels
+                });
+        }
+
+        function LoadTags(eventname) {
+            return $http.get('api/event?name='+eventname);
+        }
+
         function LogoutUser(){
             return $http.get('api/auth/user/logout');
         }
@@ -71,7 +88,10 @@
             LogoutEvent: LogoutEvent,
             GetParseData: GetParseData,
             CreateEvent: CreateEvent,
-            CreateChannel: CreateChannel
+            CreateChannel: CreateChannel,
+            GetEvent: GetEvent,
+            LoadTags: LoadTags,
+            Broadcast: Broadcast
         }
     }
 

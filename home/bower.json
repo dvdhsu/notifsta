@@ -17,6 +17,6 @@
     "angular": "~1.3.14",
     "angular-cookies": "~1.3.14",
     "angular-chart": "*",
-    "socket.io-client": "~1.3.4"
+    "ng-tags-input": "~2.1.1"
   }
 }
