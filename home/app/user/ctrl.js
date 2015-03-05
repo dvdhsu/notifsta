@@ -36,7 +36,7 @@
             if ($scope.selected_event){
                 UserService.UpdateUserEvent($scope.selected_event);
             }
-            if ($scope.data.User && $scope.data.User.events && $scope.data.User.events.length > 0){
+            if ($scope.data.User && $scope.data.User.events && $scope.data.User.events.length > 0 && !$scope.selected_event){
                 $scope.SelectEvent($scope.data.User.events[0]);
             }
             setTimeout(UpdateLoop, TIMEOUT);
