@@ -282,3 +282,11 @@ body {
 span {
   margin: 2px 2px 2px 2px;
 }
+
+.icon-click{
+  color: white;
+}
+
+.icon-click:hover:{
+  color: blue;
+}

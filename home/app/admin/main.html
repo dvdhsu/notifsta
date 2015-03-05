@@ -87,14 +87,9 @@
         </label>
       </form>
 
-      <!--<form ng-submit="finalstep()">-->
-      <!--<tags-input ng-show="step2" ng-model="tags">-->
-      <!--</tags-input>-->
-      <!--<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>-->
-      <!--</form>-->
-
     </div>
 
+    <!-- Stats -->
     <div class="row stats">
 
       <div class="col-md-4 stat stat-left">
@@ -158,14 +153,26 @@
 
     </div>
 
+    <!-- Feeds -->
     <div class="row two">
       <div class="col-md-4"
         ng-repeat="channel in data.Event.channels"
         ng-show="channel.selected">
-        <div class="actual-feed">
-          <div class="row box-title red">
-            <i class="glyphicon glyphicon-list"></i> &nbsp {{ channel.name }} - {{ channel.number_of_subscribers }}
+        <div class="row box-title red">
+          <div class="dropdown" style="float:left">
+            <a href='#' class='icon-click dropdown-toggle' id="dropdownmenu"data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownmenu">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Invite People</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Rename</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>
+            </ul>
           </div>
+          <div style="float:left; margin-left: 15px;">
+            {{ channel.name }} - {{ channel.number_of_subscribers }}
+          </div>
+        </div>
+        <div class="actual-feed">
+
           <div class="feed-item" ng-repeat="message in channel.messages">
             <div class="feed-item-time">{{ message.time }}</div> 
             <div class="feed-item-text">{{ message.message }}</div>
