@@ -1,7 +1,8 @@
 (function(){
     angular.module('notifista.services').service('NotifistaHttp', ['$http', service]);
     //var BASE_URL = 'http://localhost:1337';
-    var BASE_URL = '';
+    var BASE_URL = 'http://notifsta.com:1337';
+    //var BASE_URL = '';
 
     function service($http){
         function LoginUser(email, password){
@@ -17,14 +18,17 @@
 
         function GetEvent(name) {
             console.log(name);
-            return $http.get(BASE_URL + 'api/event?name='+name);
+            return $http.get(BASE_URL + '/api/event?name='+name);
         }
 
-        function Broadcast(eventname, broadcast, channels){
+        function Broadcast(eventname, broadcast, channel_names){
+            if (channel_names.length > 1){
+                alert('sorry, we do not allow sending to more than channel at the current moment! We will send the message to the first channel :)');
+            }
             return $http.post(BASE_URL + '/api/message', {
                     'event-name': eventname,
                     'message': broadcast,
-                    'channel-name': channels
+                    'channel-name': channel_names[0]
                 });
         }
 
@@ -50,7 +54,6 @@
                 },
                 data: {},
             }
-            console.log(req);
             return $http(req);
               
         }

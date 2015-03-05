@@ -1,5 +1,5 @@
 
-
+<a href="/admin">admin</a>
 <!--<div ng-controller="EventLoginController" ng-include src="'/app/event_login/main.html'"></div>-->
 <!--<div ng-show="!logged_in()">-->
     <!--<div>-->
@@ -19,32 +19,17 @@
 
 <!--</div>-->
 
-<button ng-click="refresh()">
-  refresh 
-</button>
-
 <div class="row header">
-
-  <div class="col-md-2">
-
-    <div class="logo">
-
-    </div>
-
+  <div class="logo" style="float:left;">
   </div>
-
-  <div class="col-md-8 eventname">
-
-    <h1>Welcome {{ user_data.email }}</h1>
-
+  <div style="float:left; margin-left: 25px">
+    <center>
+      <h1>Welcome {{ user_data.email }}</h1>
+    </center>
+    <!--<div class="logout" ng-click="logout()">-->
+      <!--<i class="glyphicon glyphicon-log-out"></i> &nbsp Log Out-->
+    <!--</div>-->
   </div>
-
-  <div class="col-md-2">
-
-    <div class="logout" ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i> &nbsp Log Out</div>
-
-  </div>
-
 </div>
 
 <div class="row content">
@@ -53,7 +38,7 @@
     <h2> Events </h2>
     <div class="list-group">
       <a href ="#" 
-        ng-repeat="event in events" 
+        ng-repeat="event in data.User.events" 
         class="list-group-item"
         ng-class="{ active : event.active }" 
         ng-click="SelectEvent(event)">
@@ -73,9 +58,8 @@
           <i class="glyphicon glyphicon-list"></i> &nbsp {{ channel.name }}
         </div>
         <div class="feed-item" ng-repeat="message in channel.messages">
-          <span class="feed-item-time">{{ message.time }}</span> 
-          &nbsp
-          <span class="feed-item-text">{{ message.message }}</span>
+          <div class="feed-item-time">{{ message.time }}</div> 
+          <div class="feed-item-text">{{ message.message }}</div>
         </div>
       </div>
     </div>

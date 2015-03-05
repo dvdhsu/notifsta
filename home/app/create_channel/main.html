@@ -7,10 +7,15 @@
            autofocus /><br>
 <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
     </form>
-    <div class="channel-list" ng-repeat="channel in event.channels">
-
-      #{{ channel.name }}
-
+    <!--<div class="channel-list" ng-repeat="channel in event.channels">-->
+    <div class="list-group">
+      <a href ="#" 
+        ng-repeat="channel in data.Event.channels" 
+        class="list-group-item"
+        ng-class="{ active : channel.selected }" 
+        ng-click="SelectChannel(channel)">
+        #{{ channel.name }}
+      </a>
     </div>
     <!--<div class="newchannel-status">{{ status }}</div>-->
 </div>

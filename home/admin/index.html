@@ -11,9 +11,6 @@
 
   <script src="/app/admin/ctrl.js"></script>
   <script src="/app/admin/service.js"></script>
-
-  <script src="/app/user/ctrl.js"></script>
-  <script src="/app/user/service.js"></script>
   <script src="/app/event_login/ctrl.js"></script>
   <script src="/app/create_channel/ctrl.js"></script>
 
@@ -28,11 +25,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
   <!--CSS-->
-  <link rel="stylesheet" type="text/css" href="styles/style.css">
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
 
   <!--ng-tags-input-->
-  <script src="bower_components/ng-tags-input/ng-tags-input.js"></script>
-  <link rel="stylesheet" type="text/css" href="bower_components/ng-tags-input/ng-tags-input.css">
+  <script src="/bower_components/ng-tags-input/ng-tags-input.js"></script>
+  <link rel="stylesheet" type="text/css" href="/bower_components/ng-tags-input/ng-tags-input.css">
 
 
   <!-- quick test -->
@@ -43,8 +40,8 @@
     <div ng-app="notifista" class="container-fluid">
       <div ng-controller="MainController">
 
-        <!--<div ng-controller="AdminPanelController" ng-include src="'/app/admin/main.html'"></div>-->
-        <div ng-controller="UserPanelController" ng-include src="'/app/user/main.html'"></div>
+        <div ng-controller="AdminPanelController" ng-include src="'/app/admin/main.html'"></div>
+        <!--<div ng-controller="UserPanelController" ng-include src="'/app/user/main.html'"></div>-->
       </div>
 
     </div>

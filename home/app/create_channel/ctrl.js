@@ -5,8 +5,7 @@
 (function(){
     angular.module('notifista.controllers').controller('CreateChannel',
         //['$scope', function($scope){}]);
-        ['$scope', 'NotifistaHttp', 'StateService', '$cookies',function($scope, NotifistaHttp, StateService, $cookies) {
-            console.log("HWFEWF")
+        ['$scope', 'NotifistaHttp', 'EventService', '$cookies',function($scope, NotifistaHttp, EventService, $cookies) {
 
         $scope.screen = '';
         $scope.status = '';
@@ -20,12 +19,16 @@
         $scope.create_channel = function(){
             var promise = NotifistaHttp.CreateChannel($scope.input.channel_name);
             promise.success(function(data){
-                $scope.status = 'ugjk';
                 $scope.event.channels.push({'name': $scope.input.channel_name});
             })
             promise.error(function(err){
                 $scope.status = err;
             })
+        }
+
+        $scope.SelectChannel = function(channel){
+            channel.selected = !channel.selected;
+
         }
 
     }]);

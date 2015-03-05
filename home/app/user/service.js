@@ -1,14 +1,10 @@
-*********************
-DEPRECATED
-*********************
-
 /** Anthony Guo (anthony.guo@some.ox.ac.uk)
  * Purpose of this service is to maintain the global state of the application.
  * Provides methods for updating
  */
 
 (function(){
-    angular.module('notifista.services').service('StateService', ['$cookies', 'NotifistaHttp', service]);
+    angular.module('notifista.services').service('UserService', ['$cookies', 'NotifistaHttp', service]);
     function service($cookies, NotifistaHttp){
         function GetUserLoggedIn(){
             return ($cookies['user-id'] != null);
@@ -77,23 +73,6 @@ DEPRECATED
             });
         }
 
-        function SetEvent(event_name){
-            var promise = NotifistaHttp.GetEvent(event_name);
-            promise.success(function(resp){
-                _data.Event = resp.data;
-            });
-            
-            promise.error(function(err){
-                console.log(err);
-            })
-
-        }
-
-        function UpdateEvent(){
-
-        }
-
-
         return {
             //Used to set the user we would like to have info about
             SetUser: SetUser,
@@ -103,12 +82,6 @@ DEPRECATED
             //to an event in the current user object), which lets use
             //only make http requests for the event we care about
             UpdateUserEvent: UpdateUserEvent,
-
-            //Used to set the event we would like to have info about
-            SetEvent: SetEvent,
-
-            //Used to get updated information about the event
-            UpdateEvent: UpdateEvent,
 
             //for data binding purposes
             data : _data

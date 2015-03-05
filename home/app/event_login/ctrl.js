@@ -8,7 +8,7 @@
  */
 (function(){
     angular.module('notifista.controllers').controller('EventLoginController',
-        ['$scope', 'NotifistaHttp', 'StateService', '$cookies',function($scope, NotifistaHttp, StateService, $cookies) {
+        ['$scope', 'NotifistaHttp', '$cookies',function($scope, NotifistaHttp,  $cookies) {
             console.log("HWFEWF")
 
         $scope.screen = '';
@@ -36,7 +36,6 @@
             console.log(p);
             p.success(function(event){
                 console.log(event);
-                StateService.Event = event;
             })
             p.error(function(e){
                 console.log(e);
