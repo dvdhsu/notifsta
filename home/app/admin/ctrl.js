@@ -5,8 +5,8 @@
     angular.module('notifista.controllers').controller('AdminPanelController',
     ['$scope', 'NotifistaHttp', 'EventService', '$cookies', '$timeout', function($scope, NotifistaHttp, EventService, $cookies, $timeout) {
         //TESTING PURPOSES ONLY
-        var p = NotifistaHttp.LoginEvent('event1', 'asdfasdf');
         //var p = NotifistaHttp.LoginEvent('event1', 'asdfasdf');
+        var p = NotifistaHttp.LoginEvent('HackLondon', 'asdfasdf');
         p.success(function(e){
             console.log(e);
             console.log($cookies['event-name']);
