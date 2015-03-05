@@ -71,7 +71,7 @@
 
         <input class="newnoticeinput" type="text" placeholder="Write a new notice..." ng-model="input.message" ng-show="!step2" ng-disabled="selected_none() || loading">
         <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
-        <label ng-show="!info">
+        <label ng-show="!info" style="margin-top:5px; margin-left: 10px;">
           <span ng-show = "!selected_none()">
             Posting to 
             <span ng-repeat = "channel in data.Event.channels" ng-show="channel.selected">
@@ -82,7 +82,7 @@
             Select one more channels on the left to start broadcasting notices!
           </span>
         </label>
-        <label ng-show="info" style="margin-top:3px">
+        <label ng-show="info" style="margin-top:5px; margin-left: 10px">
           {{ info }}
         </label>
       </form>
@@ -169,6 +169,9 @@
           <div class="feed-item" ng-repeat="message in channel.messages">
             <div class="feed-item-time">{{ message.time }}</div> 
             <div class="feed-item-text">{{ message.message }}</div>
+          </div>
+          <div class="feed-item" ng-show="channel.messages.length == 0">
+            <div class="feed-item-text"> It's lonely in here - send a message now! </div>
           </div>
         </div>
       </div>

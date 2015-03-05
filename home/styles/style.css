@@ -216,8 +216,11 @@ body {
 
 .actual-feed, .actual-graph {
 	background: white;
-	min-height: 200px;
+	/*min-height: 200px;*/
 	border-radius: 7px;
+  height: 400px;
+  overflow-y: scroll;
+  margin-bottom: 50px;
 }
 
 

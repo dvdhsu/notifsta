@@ -54,15 +54,17 @@
                 } else {
                     $scope.info = 'Success!';
                 }
-                setTimeout(ClearInfo, 1000);
+                ClearInfoTimeout();
             })
             p.error(function(e){
                 $scope.loading = false;
             })
         }
 
-        function ClearInfo(){
-            $scope.info = '';
+        function ClearInfoTimeout(){
+            setTimeout(function(){
+                $scope.info = '';
+            }, 3000);
         }
 
 
