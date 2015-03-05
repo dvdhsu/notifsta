@@ -40,7 +40,6 @@
             }
 
             event.channels.map(function(channel){
-                console.log('wot');
                 var promise = NotifistaHttp.GetMessages(event.name, channel.name, _data.User.email);
                 promise.success(function(messages){
                     channel.messages = messages.map(function(msg){

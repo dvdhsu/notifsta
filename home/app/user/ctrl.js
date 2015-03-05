@@ -4,7 +4,7 @@
 (function(){
     angular.module('notifista.controllers').controller('UserPanelController',
     ['$scope', 'NotifistaHttp', 'UserService', '$cookies', '$timeout', function($scope, NotifistaHttp, UserService, $cookies, $timeout) {
-        var TIMEOUT = 5 * 1000; //5 seconds
+        var TIMEOUT = 2 * 1000; //5 seconds
         var _websocket_enabled = false;
 
         $scope.logged_in = UserService.GetEventLoggedIn;
@@ -33,13 +33,16 @@
         }
 
         function UpdateLoop(){
-            UserService.SetUser($scope.email);
             if ($scope.selected_event){
                 UserService.UpdateUserEvent($scope.selected_event);
             }
+            if ($scope.data.User && $scope.data.User.events && $scope.data.User.events.length > 0){
+                $scope.SelectEvent($scope.data.User.events[0]);
+            }
             setTimeout(UpdateLoop, TIMEOUT);
         }
-        UpdateLoop();
         $scope.data = UserService.data;
+        UserService.SetUser($scope.email);
+        UpdateLoop();
     }]);
 })();
