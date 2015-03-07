@@ -10,6 +10,7 @@
             return ($cookies['event-name'] != null);
         }
 
+
         //We wrap everything under a _data object so that we can perform databindings much more easily!
         //Otherwise, we will be assigning by value and things get messy quite quickly!
         var _data = {
@@ -22,14 +23,37 @@
 
 
         function SetEvent(event_name){
-            var promise = NotifistaHttp.GetEvent(event_name);
-            promise.success(function(resp){
-                _data.Event = resp.data;
-            });
+            console.log(_data);
+            for (var i = 0 ; i != _data.User.events.length; ++i){
+                if (_data.User.events[i].name == event_name){
+                    _data.Event = _data.User.events[i];
+                }
+            }
+            //var promise = NotifistaHttp.GetEvent(event_name);
+            //promise.success(function(resp){
+                //_data.Event = resp.data;
+            //});
             
-            promise.error(function(err){
-            })
+            //promise.error(function(err){
+            //})
 
+        }
+
+        function SetState(email, password, event_name){
+            Login(email, password, function(){SetEvent(event_name)})
+        }
+
+        function Login(email, password, callback){
+            var p = NotifistaHttp.Login(email, password);
+            p.success(function(e){
+                _data.User = e.data;
+                if (callback){
+                    callback();
+                }
+            })
+            p.error(function(e){
+                console.log(e);
+            })
         }
 
         function UpdateEvent(){
@@ -41,13 +65,20 @@
             if (!event){
                 return;
             }
+            //var promise = NotifistaHttp.GetEvent(_data.Event.id);
+            //promise.success(function(e){
+                //console.log(e);
+            //});
+
             event.channels.map(function(channel){
-                var promise = NotifistaHttp.GetMessages(event.name, channel.name);
-                promise.success(function(messages){
+                var promise = NotifistaHttp.GetMessages(channel.id);
+                promise.success(function(e){
+                    var messages = e.data;
                     channel.messages = messages.map(function(msg){
-                        msg.time = moment(msg.createdAt).fromNow();
+                        msg.time = moment(msg.created_at).fromNow();
                         return msg;
                     });
+                    channel.messages.reverse();
                 });
                 promise.error(function(error){
                     channel.messages = [
@@ -64,10 +95,13 @@
 
         return {
             //Used to set the event we would like to have info about
-            SetEvent: SetEvent,
+            SetState: SetState,
 
             //Used to get updated information about the event
             UpdateEvent: UpdateEvent,
+
+            Login: Login,
+
 
             //for data binding purposes
             data : _data

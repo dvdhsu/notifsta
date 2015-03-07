@@ -3,50 +3,67 @@
     //var BASE_URL = 'http://localhost:1337';
     var BASE_URL = 'http://notifsta.com';
     //var BASE_URL = '';
+    var credentials = {
+        email: null,
+        key: null 
+    }
+
+    function GetAuth(){
+        return 'user_email=' + credentials.email + '&user_token=' + credentials.key;
+    }
 
     function service($http){
         function LoginUser(email, password){
-            return $http.post(BASE_URL + '/api/auth/user', {
+            return $http.post(BASE_URL + '/api/v1/auth/user', {
                     email: email,
                     password: password
                 });
         }
 
         function GetUser(email){
-            return $http.get(BASE_URL + '/api/user?email=' + email);
+            return $http.get(BASE_URL + '/api/v1/user?email=' + email);
         }
 
-        function GetEvent(name) {
-            console.log(name);
-            return $http.get(BASE_URL + '/api/event?name='+name);
+        function GetEvent(id) {
+            console.log(GetAuth());
+            return $http.get(BASE_URL + '/api/v1/events/'+ id + '/?' + GetAuth());
         }
 
-        function Broadcast(eventname, broadcast, channel_names){
-            if (channel_names.length > 1){
-                alert('sorry, we do not allow sending to more than channel at the current moment! We will send the message to the first channel :)');
-            }
-            return $http.post(BASE_URL + '/api/message', {
-                    'event-name': eventname,
-                    'message': broadcast,
-                    'channel-name': channel_names[0]
-                });
+        function Broadcast(broadcast, channel_ids){
+            return channel_ids.map(function(channel_id){
+                var req = {
+                    url: BASE_URL + '/api/v1/channels/' + channel_id + '/messages',
+                    method: 'POST',
+                    params: {
+                        'user_email': credentials.email,
+                        'user_token': credentials.key,
+                        'message[message_guts]' : broadcast
+                    }
+                }
+                return $http(req);
+            })
         }
 
         function LogoutUser(){
-            return $http.get(BASE_URL + '/api/auth/user/logout');
+            return $http.get(BASE_URL + '/api/v1/auth/user/logout');
         }
 
-        function LoginEvent(name, password){
-            return $http.post(BASE_URL + '/api/auth/event', {
-                    name: name,
-                    password: password
-                });
+        function Login(email, password){
+            credentials.email = email;
+            credentials.password = password
+            var promise = $http.get(BASE_URL + '/api/v1/auth/login?email='+ email + '&password='+ password);
+            promise.success(function(e){
+                if (e.data){
+                    credentials.key = e.data.authentication_token;
+                }
+            })
+            return promise;
         }
 
         function GetParseData () {
             var req = {
                 method: 'POST',
-                url: 'https://api.parse.com/1/events/AppOpened',
+                url: 'https://api/v1.parse.com/1/events/AppOpened',
                 headers: {
                     'X-Parse-Application-Id': 'zV50kkuGI8esJY0D6eAoy90bMgX3G2jWeTOTe1Rw',
                     'X-Parse-REST-API-Key': 'bJIyGfK5hvzCNudlBWFBUF1t7ZYbo9DTliXylG0z',
@@ -55,38 +72,36 @@
                 data: {},
             }
             return $http(req);
-              
         }
 
         function LogoutEvent(){
-            return $http.get('/api/auth/event/logout');
+            return $http.get('/api/v1/auth/event/logout');
         }
 
         function CreateEvent(name, password){
-            return $http.post('/api/event/', {
+            return $http.post('/api/v1/event/', {
                 name : name,
                 password: password
             });
         }
 
         function CreateChannel(name){
-            return $http.post('/api/event/channel', {
+            return $http.post('/api/v1/event/channel', {
                 name : name
             });
         }
 
         function CreateNotification(event_name, channel_name, message){
-            return $http.post('/api/event/channel/notif')
+            return $http.post('/api/v1/event/channel/notif')
         }
 
-        function GetMessages(event_name, channel_name, email){
+        function GetMessages(id){
             var req = {
-                url: BASE_URL + '/api/message',
+                url: BASE_URL + '/api/v1/channels/' + id + '/messages',
                 method: 'GET',
                 params: {
-                    'event-name' : event_name,
-                    'channel-name': channel_name,
-                    'email' : email
+                    'user_email': credentials.email,
+                    'user_token': credentials.key
                 }
             }
             return $http(req);
@@ -95,7 +110,7 @@
         return {
             LoginUser: LoginUser,
             LogoutUser: LogoutUser,
-            LoginEvent: LoginEvent,
+            Login: Login,
             LogoutEvent: LogoutEvent,
             GetParseData: GetParseData,
             CreateEvent: CreateEvent,
@@ -103,7 +118,8 @@
             GetEvent: GetEvent,
             Broadcast: Broadcast,
             GetUser: GetUser,
-            GetMessages: GetMessages
+            GetMessages: GetMessages,
+            credentials: credentials
         }
     }
 

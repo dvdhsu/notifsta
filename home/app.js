@@ -11,6 +11,6 @@ angular.module('notifista.controllers', ['ngCookies']);
 angular.module('notifista').controller('MainController',
     ['$scope', 'NotifistaHttp', '$cookies', function($scope, NotifistaHttp, $cookies) {
         $scope.event = {
-            name: 'HackLondon'
+            name: 'Oxford Inspires'
         }
     }]);

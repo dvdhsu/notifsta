@@ -31,30 +31,25 @@
     <!--</div>-->
   </div>
 </div>
-<!--<div class="row header">-->
+<!--<div class="row content" >-->
 
   <!--<div class="col-md-2">-->
-
-    <!--<div class="logo">-->
-
+    <!--[> Select events here <]-->
+    <!--<h2> Events </h2>-->
+    <!--<div class="list-group">-->
+      <!--<a href ="#" -->
+        <!--ng-repeat="event in data.User.events" -->
+        <!--class="list-group-item"-->
+        <!--ng-class="{ active : event.active }" -->
+        <!--ng-click="SelectEvent(event)">-->
+        <!--{{ event.name }}-->
+        <!--<span class="badge" ng-show="event.new_messages > 0">-->
+          <!--{{ event.new_messages }}-->
+        <!--</span>-->
+      <!--</a>-->
     <!--</div>-->
-
   <!--</div>-->
-
-  <!--<div class="col-md-8 eventname">-->
-
-    <!--<h1>{{ event.name }}</h1>-->
-
-  <!--</div>-->
-
-  <!--<div class="col-md-2">-->
-
-    <!--<div class="logout" ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i> &nbsp Log Out</div>-->
-
-  <!--</div>-->
-
 <!--</div>-->
-
 <div class="row content" >
 
   <div class="col-md-2">
@@ -175,7 +170,7 @@
 
           <div class="feed-item" ng-repeat="message in channel.messages">
             <div class="feed-item-time">{{ message.time }}</div> 
-            <div class="feed-item-text">{{ message.message }}</div>
+            <div class="feed-item-text">{{ message.message_guts }}</div>
           </div>
           <div class="feed-item" ng-show="channel.messages.length == 0">
             <div class="feed-item-text"> It's lonely in here - send a message now! </div>
